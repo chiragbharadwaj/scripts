@@ -1,0 +1,170 @@
+#!/bin/bash
+
+# for file in *.tex
+# do
+#   pdflatex "$file"
+#   rm *.aux *.log
+#   name=$(basename "$file" .tex)
+#   pdf=$name.pdf
+#   open $pdf
+# done
+
+print_options () {
+	echo -e \
+"Usage: latexc <options> <source files>
+where possible options include:
+  -help                      Print a synopsis of standard options
+  -version                   Version information
+  -pdf                       Compile the LaTeX source files using PDFLaTeX
+  -xe                        Compile the LaTeX source files using XeLaTeX
+  -lua                       Compile the LaTeX source files using LuaLaTeX
+  -v                         Verbose: Output all warnings/errors from compiler
+  -c                         Don't clean up the directory after compiling
+  -d <directory>             Specify where to place generated PDF files"
+
+	exit 0
+}
+
+version="latexc, version 0.8.1 (alpha release)
+
+Copyright © 2015-2016 Chirag Bharadwaj, Cornell University.
+
+There is NO warranty. This software may be freely redistributed with attribution
+to the original author in all cases. This software may also be modified from its
+original version and redistributed as long as all changes made are stated very
+clearly in the redistributed version and attribution to the original author is
+provided. You may not use ANY part of this software for commercial purposes. All
+rights reserved. Please report any bugs to Chirag at cb625@cornell.edu.
+
+Written in bash."
+
+pdf=0
+xe=0
+lua=0
+verbose=0
+args=""
+dir=""
+output=""
+error=0
+
+while true; do
+	case "$1" in
+		"")
+			break
+			;;
+		-help)
+			print_options
+			break
+			;;
+		-version)
+			echo -e "$version"
+			exit 0
+			;;
+		-pdf)
+			if [[ "$pdf" -eq 1 ]]; then
+				echo "Warning: You are already compiling with PDFLaTeX."
+				shift
+			elif [[ "$xe" -eq 1 ]]; then
+				echo "Error: Only one method of compilation can be specified. You have already chosen XeLaTeX, so you cannot use PDFLaTeX."
+				error=1
+				break
+			elif [[ "$lua" -eq 1 ]]; then
+				echo "Error: Only one method of compilation can be specified. You have already chosen LuaLaTeX, so you cannot use PDFLaTeX."
+				error=1
+				break
+			else
+				pdf=1
+			fi
+			shift
+			;;
+		-xe)
+			if [[ "$pdf" -eq 1 ]]; then
+				echo "Error: Only one method of compilation can be specified. You have already chosen PDFLaTeX, so you cannot use XeLaTeX."
+				error=1
+				break
+			elif [[ "$xe" -eq 1 ]]; then
+				echo "Warning: You are already compiling with XeLaTeX."
+				shift
+			elif [[ "$lua" -eq 1 ]]; then
+				echo "Error: Only one method of compilation can be specified. You have already chosen LuaLaTeX, so you cannot use XeLaTeX."
+				error=1
+				break
+			else
+				xe=1
+			fi
+			shift
+			;;
+		-lua)
+			if [[ "$pdf" -eq 1 ]]; then
+				echo "Error: Only one method of compilation can be specified. You have already chosen PDFLaTeX, so you cannot use LuaLaTeX."
+				error=1
+				break
+			elif [[ "$xe" -eq 1 ]]; then
+				echo "Error: Only one method of compilation can be specified. You have already chosen XeLaTeX, so you cannot use LuaLaTeX."
+				error=1
+				break
+			elif [[ "$lua" -eq 1 ]]; then
+				echo "Warning: You are already compiling with LuaLaTeX."
+				shift
+			else
+				lua=1
+			fi
+			shift
+			;;
+		-v)
+			verbose=1
+			shift
+			;;
+		-d)
+			shift
+			if [[ -d "$1" ]]; then
+				dir="$1"
+				shift
+			else
+				echo "Error: The -d option must be followed by a directory to which to move files."
+				echo "  • $1 is not a valid directory"
+				error=1
+				break
+			fi
+			shift
+			;;
+		*)
+			if [[ "$1" == *.tex ]]; then
+				args="$args $1"
+				shift
+			else
+				echo "Error: Source files must be TeX files that end with .tex."
+				echo "  • $1 is not a TeX source file"
+				error=1
+				shift
+			fi
+			;;
+	esac
+done
+
+if [[ "$error" -eq 1 ]]; then
+	print_options
+	exit 1
+else
+	if [[ -z "$args" ]]; then
+		echo "Error: No source files were specified."
+		print_options
+		exit 1
+	elif [[ "$pdf" -eq 1 ]]; then
+		echo "TODO: Add support for the actual PDFLaTeX compilation here!"
+	elif [[ "$xe" -eq 1 ]]; then
+		echo "TODO: Add support for the actual XeLaTeX compilation here!"
+	elif [[ "$lua" -eq 1 ]]; then
+		echo "TODO: Add support for the actual LuaLaTeX compilation here!"
+	else
+		echo "Warning: No compiler was specified. Assuming the default of PDFLaTeX..."
+		echo "...JK, this isn't supported just yet, either. But it will be soon!"
+	fi
+
+	if ! [[ -z "$dir" ]]; then
+		mv "$output" "$dir"
+	fi
+	exit 0
+fi
+
+#print_options
