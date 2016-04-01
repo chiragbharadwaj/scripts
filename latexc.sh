@@ -1,14 +1,5 @@
 #!/bin/bash
 
-# for file in *.tex
-# do
-#   pdflatex "$file"
-#   rm *.aux *.log
-#   name=$(basename "$file" .tex)
-#   pdf=$name.pdf
-#   open $pdf
-# done
-
 print_options () {
 	echo -e \
 "Usage: latexc <options> <source files>
@@ -42,6 +33,7 @@ pdf=0
 xe=0
 lua=0
 verbose=0
+clean=1
 args=""
 dir=""
 output=""
@@ -115,6 +107,10 @@ while true; do
 			verbose=1
 			shift
 			;;
+		-c)
+			clean=0
+			shift
+			;;
 		-d)
 			shift
 			if [[ -d "$1" ]]; then
@@ -131,6 +127,9 @@ while true; do
 		*)
 			if [[ "$1" == *.tex ]]; then
 				args="$args $1"
+				name=$(basename "$1" .tex)
+				out=$name.pdf
+				output="$output $out"
 				shift
 			else
 				echo "Error: Source files must be TeX files that end with .tex."
@@ -146,25 +145,29 @@ if [[ "$error" -eq 1 ]]; then
 	print_options
 	exit 1
 else
+	args=$(echo "$args" | xargs)
+	output=$(echo "$output" | xargs)
 	if [[ -z "$args" ]]; then
 		echo "Error: No source files were specified."
 		print_options
 		exit 1
 	elif [[ "$pdf" -eq 1 ]]; then
-		echo "TODO: Add support for the actual PDFLaTeX compilation here!"
+		pdflatex "$args"
 	elif [[ "$xe" -eq 1 ]]; then
-		echo "TODO: Add support for the actual XeLaTeX compilation here!"
+		xelatex "$args"
 	elif [[ "$lua" -eq 1 ]]; then
-		echo "TODO: Add support for the actual LuaLaTeX compilation here!"
+		lualatex "$args"
 	else
 		echo "Warning: No compiler was specified. Assuming the default of PDFLaTeX..."
-		echo "...JK, this isn't supported just yet, either. But it will be soon!"
+		pdflatex "$args"
 	fi
 
-	if ! [[ -z "$dir" ]]; then
+	if [[ "$clean" -eq 1 ]]; then
+		rm *.aux *.log
+	fi
+
+	if ! [[ -z "$dir" || -z "$output" ]]; then
 		mv "$output" "$dir"
 	fi
 	exit 0
 fi
-
-#print_options
