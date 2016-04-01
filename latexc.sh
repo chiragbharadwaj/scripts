@@ -146,20 +146,33 @@ if [[ "$error" -eq 1 ]]; then
 	exit 1
 else
 	args=$(echo "$args" | xargs)
+	set -- $args
 	output=$(echo "$output" | xargs)
 	if [[ -z "$args" ]]; then
 		echo "Error: No source files were specified."
 		print_options
 		exit 1
 	elif [[ "$pdf" -eq 1 ]]; then
-		pdflatex "$args"
+		for i in "$@"
+		do
+			pdflatex $i
+		done
 	elif [[ "$xe" -eq 1 ]]; then
-		xelatex "$args"
+		for i in "$@"
+		do
+			xelatex $i
+		done
 	elif [[ "$lua" -eq 1 ]]; then
-		lualatex "$args"
+		for i in "$@"
+		do
+			lualatex $i
+		done
 	else
 		echo "Warning: No compiler was specified. Assuming the default of PDFLaTeX..."
-		pdflatex "$args"
+		for i in "$@"
+		do
+			pdflatex $i
+		done
 	fi
 
 	if [[ "$clean" -eq 1 ]]; then
