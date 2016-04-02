@@ -153,26 +153,54 @@ else
 		print_options
 		exit 1
 	elif [[ "$pdf" -eq 1 ]]; then
-		for i in "$@"
-		do
-			pdflatex $i
-		done
+		if [[ "$verbose" -eq 1 ]]; then
+			for i in "$@"
+			do
+				pdflatex $i
+			done
+		else
+			for i in "$@"
+			do
+				pdflatex $i > /dev/null
+			done
+		fi
 	elif [[ "$xe" -eq 1 ]]; then
-		for i in "$@"
-		do
-			xelatex $i
-		done
+		if [[ "$verbose" -eq 1 ]]; then
+			for i in "$@"
+			do
+				xelatex $i
+			done
+		else
+			for i in "$@"
+			do
+				xelatex $i > /dev/null
+			done
+		fi
 	elif [[ "$lua" -eq 1 ]]; then
-		for i in "$@"
-		do
-			lualatex $i
-		done
+		if [[ "$verbose" -eq 1 ]]; then
+			for i in "$@"
+			do
+				lualatex $i
+			done
+		else
+			for i in "$@"
+			do
+				lualatex $i > /dev/null
+			done
+		fi
 	else
 		echo "Warning: No compiler was specified. Assuming the default of PDFLaTeX..."
-		for i in "$@"
-		do
-			pdflatex $i
-		done
+		if [[ "$verbose" -eq 1 ]]; then
+			for i in "$@"
+			do
+				pdflatex $i
+			done
+		else
+			for i in "$@"
+			do
+				pdflatex $i > /dev/null
+			done
+		fi
 	fi
 
 	if [[ "$clean" -eq 1 ]]; then
