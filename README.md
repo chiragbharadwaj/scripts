@@ -68,4 +68,4 @@ Other scripts to come.
 
 Copyright © 2015-2016 Chirag Bharadwaj, Cornell University.
 
-There is NO warranty. This software may be freely redistributed with attribution to the original author in all cases. This software may also be modified from its original version and redistributed as long as all changes made are stated very clearly in the redistributed version and attribution to the original author is provided. You may not use ANY part of this software for commercial purposes. All rights reserved. Please report any bugs to Chirag at cb625@cornell.edu.
+There is NO warranty. This software may be freely redistributed with attribution to the original author in all cases. This software may also be modified from its original version and redistributed as long as all changes made are stated very clearly in the redistributed version and attribution to the original author is provided. You may not use ANY part of this software for commercial purposes. All rights reserved. Please report any bugs to Chirag by making a pull request to this repository.
