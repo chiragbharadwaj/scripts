@@ -11,6 +11,8 @@ This script is a wrapper around standard the `LaTeX` compilers under a convenien
  + `latexc`: This is the actual executable file that needs to be installed on your computer. To install it, follow the installation directions below.
  + `latexc.sh`: This is the source code that can be examined if you would like to discover potential sources of bugs and report what could be wrong (by line number). All suggestions are welcome! Do **not** use this file when following the installation directions below.
 
+A significant advantage of `latexc` over the standard `pdflatex` and similar compilers is that `latexc` automatically cleans up useless files unless specified otherwise. Also, specifying the output directory for target PDF files happens with much cleaner syntax.
+
 ### Usage
 
 You can invoke `latexc` by following these standard commands (with options):
