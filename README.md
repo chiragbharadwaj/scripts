@@ -3,9 +3,11 @@ A collection of useful scripts that I have written.
 
 ---
 
-## `latexc`
+## `latexc` (beta version)
 
 ### Description
+
+**NOTE: `latexc` is still in its beta version.**
 
 This script is a wrapper around standard the `LaTeX` compilers under a convenient user-interface. The interface is modeled after similar interfaces found for wrappers like `ocamlc` and `javac` for OCaml and Java, respectively. There are TWO files provided above:
  + `latexc`: This is the actual executable file that needs to be installed on your computer. To install it, follow the installation directions below.
