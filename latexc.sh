@@ -153,6 +153,7 @@ else
 		print_options
 		exit 1
 	elif [[ "$pdf" -eq 1 ]]; then
+		echo "Compiling using PDFLaTeX... Press [CTRL+D] if it hangs (~30 seconds)."
 		if [[ "$verbose" -eq 1 ]]; then
 			for i in "$@"
 			do
@@ -165,6 +166,7 @@ else
 			done
 		fi
 	elif [[ "$xe" -eq 1 ]]; then
+		"Compiling using XeLaTeX... Press [CTRL+D] if it hangs (~30 seconds)."
 		if [[ "$verbose" -eq 1 ]]; then
 			for i in "$@"
 			do
@@ -177,6 +179,7 @@ else
 			done
 		fi
 	elif [[ "$lua" -eq 1 ]]; then
+		"Compiling using LuaLaTeX... Press [CTRL+D] if it hangs (~30 seconds)."
 		if [[ "$verbose" -eq 1 ]]; then
 			for i in "$@"
 			do
@@ -190,6 +193,7 @@ else
 		fi
 	else
 		echo "Warning: No compiler was specified. Assuming the default of PDFLaTeX..."
+		echo "Press [CTRL+D] if it hangs (~30 seconds)."
 		if [[ "$verbose" -eq 1 ]]; then
 			for i in "$@"
 			do
