@@ -16,7 +16,7 @@ where possible options include:
 	exit 0
 }
 
-version="latexc, version 0.8.1 (alpha release)
+version="latexc, version 0.9 (alpha release)
 
 Copyright © 2015-2016 Chirag Bharadwaj, Cornell University.
 
