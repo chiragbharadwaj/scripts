@@ -16,7 +16,7 @@ where possible options include:
 	exit 0
 }
 
-version="latexc, version 0.9 (alpha release)
+version="latexc, version 1.0 (beta release)
 
 Copyright © 2015-2016 Chirag Bharadwaj, Cornell University.
 
@@ -122,7 +122,6 @@ while true; do
 				error=1
 				break
 			fi
-			shift
 			;;
 		*)
 			if [[ "$1" == *.tex ]]; then
